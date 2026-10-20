@@ -46,30 +46,56 @@
       <!-- Feedback message -->
       <p id="greeting" aria-live="polite"></p>
 
-      <!-- Check-in form -->
-      <form class="check-in" id="checkInForm">
-        <label for="attendeeName" class="form-label">Attendee Check-In</label>
-        <div class="form-group">
-          <div class="input-wrapper">
-            <input
-              type="text"
-              id="attendeeName"
-              name="attendeeName"
-              placeholder="Enter name..."
-              required
-            />
-            <select id="teamSelect" name="team" required>
-              <option value="" disabled selected>Select Team...</option>
-              <option value="water">Team Water Wise</option>
-              <option value="zero">Team Net Zero</option>
-              <option value="power">Team Renewables</option>
-            </select>
-          </div>
-          <button type="submit" id="checkInBtn">
-            <i class="fas fa-user-check"></i> Check In
+      <button
+        type="button"
+        id="openCheckInDialog"
+        class="open-check-in-button"
+      >
+        <i class="fas fa-user-check"></i> Check In an Attendee
+      </button>
+
+      <dialog
+        id="checkInDialog"
+        class="check-in-dialog"
+        aria-labelledby="checkInDialogHeading"
+      >
+        <div class="dialog-header">
+          <h2 id="checkInDialogHeading">Attendee Check-In</h2>
+          <button
+            type="button"
+            id="closeCheckInDialog"
+            class="dialog-close"
+            aria-label="Close check-in form"
+          >
+            &times;
           </button>
         </div>
-      </form>
+        <form class="check-in" id="checkInForm">
+          <label for="attendeeName" class="form-label"
+            >Enter the attendee's name and team</label
+          >
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="attendeeName"
+                name="attendeeName"
+                placeholder="Enter name..."
+                required
+              />
+              <select id="teamSelect" name="team" required>
+                <option value="" disabled selected>Select Team...</option>
+                <option value="water">Team Water Wise</option>
+                <option value="zero">Team Net Zero</option>
+                <option value="power">Team Renewables</option>
+              </select>
+            </div>
+            <button type="submit" id="checkInBtn">
+              <i class="fas fa-user-check"></i> Check In
+            </button>
+          </div>
+        </form>
+      </dialog>
 
       <!-- Team stats -->
       <div class="team-stats">

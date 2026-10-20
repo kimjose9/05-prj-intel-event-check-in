@@ -97,6 +97,63 @@ body {
   text-align: center;
 }
 
+.open-check-in-button {
+  margin: 0 auto;
+}
+
+.check-in-dialog {
+  width: min(90vw, 650px);
+  max-width: 650px;
+  padding: 30px;
+  border: 0;
+  border-radius: 16px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 16px 48px rgba(0, 30, 60, 0.25);
+}
+
+.check-in-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(3px);
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dialog-header h2 {
+  color: #334155;
+  font-size: 22px;
+}
+
+.check-in-dialog .check-in {
+  padding: 0;
+  background: transparent;
+}
+
+.dialog-close {
+  min-width: 42px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  background: #f1f5f9;
+  color: #475569;
+  box-shadow: none;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.dialog-close:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+  transform: none;
+  box-shadow: none;
+}
+
 .form-group {
   display: flex;
   gap: 15px;
@@ -429,6 +486,10 @@ select {
 
   .form-group {
     flex-direction: column;
+  }
+
+  .check-in-dialog {
+    padding: 24px;
   }
 
   input,

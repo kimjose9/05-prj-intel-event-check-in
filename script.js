@@ -7,6 +7,9 @@ const TEAM_NAMES = {
 };
 
 const checkInForm = document.getElementById("checkInForm");
+const checkInDialog = document.getElementById("checkInDialog");
+const openCheckInDialogButton = document.getElementById("openCheckInDialog");
+const closeCheckInDialogButton = document.getElementById("closeCheckInDialog");
 const nameInput = document.getElementById("attendeeName");
 const teamSelect = document.getElementById("teamSelect");
 const greeting = document.getElementById("greeting");
@@ -26,6 +29,15 @@ let attendance = {
   attendees: [],
 };
 let storageWarning = "";
+
+openCheckInDialogButton.addEventListener("click", function () {
+  checkInDialog.showModal();
+  nameInput.focus();
+});
+
+closeCheckInDialogButton.addEventListener("click", function () {
+  checkInDialog.close();
+});
 
 function loadAttendance() {
   let savedAttendance;
@@ -191,7 +203,8 @@ checkInForm.addEventListener("submit", function (event) {
   }
 
   checkInForm.reset();
-  nameInput.focus();
+  checkInDialog.close();
+  openCheckInDialogButton.focus();
 });
 
 loadAttendance();
