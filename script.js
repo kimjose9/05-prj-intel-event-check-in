@@ -31,13 +31,53 @@ let attendance = {
 let storageWarning = "";
 
 openCheckInDialogButton.addEventListener("click", function () {
-  checkInDialog.showModal();
+  checkInDialog.hidden = false;
+  document.body.classList.add("modal-open");
   nameInput.focus();
 });
 
 closeCheckInDialogButton.addEventListener("click", function () {
-  checkInDialog.close();
+  closeCheckInDialog();
 });
+
+checkInDialog.addEventListener("click", function (event) {
+  if (event.target === checkInDialog) {
+    closeCheckInDialog();
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (checkInDialog.hidden) {
+    return;
+  }
+
+  if (event.key === "Escape") {
+    closeCheckInDialog();
+    return;
+  }
+
+  if (event.key === "Tab") {
+    const focusableElements = checkInDialog.querySelectorAll(
+      "button:not([disabled]), input:not([disabled]), select:not([disabled])"
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  }
+});
+
+function closeCheckInDialog() {
+  checkInDialog.hidden = true;
+  document.body.classList.remove("modal-open");
+  openCheckInDialogButton.focus();
+}
 
 function loadAttendance() {
   let savedAttendance;
@@ -203,8 +243,7 @@ checkInForm.addEventListener("submit", function (event) {
   }
 
   checkInForm.reset();
-  checkInDialog.close();
-  openCheckInDialogButton.focus();
+  closeCheckInDialog();
 });
 
 loadAttendance();
