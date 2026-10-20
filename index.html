@@ -30,13 +30,21 @@
         <i class="fas fa-users"></i>
         Attendance: <span id="attendeeCount">0</span>/50
       </div>
-      <div class="progress-container">
+      <div
+        class="progress-container"
+        role="progressbar"
+        aria-label="Attendance goal progress"
+        aria-valuemin="0"
+        aria-valuemax="50"
+        aria-valuenow="0"
+      >
         <div id="progressBar" class="progress-bar"></div>
       </div>
+      <p id="progressText" class="progress-text">0% of the attendance goal</p>
     </div>
     <div class="container">
       <!-- Feedback message -->
-      <p id="greeting"></p>
+      <p id="greeting" aria-live="polite"></p>
 
       <!-- Check-in form -->
       <form class="check-in" id="checkInForm">
@@ -80,6 +88,13 @@
             <span class="team-count" id="powerCount">0</span>
           </div>
         </div>
+
+        <section class="attendee-list" aria-labelledby="attendeeListHeading">
+          <h3 id="attendeeListHeading">Checked-In Attendees</h3>
+          <ul id="attendeeList">
+            <li class="empty-list">No attendees yet. Be the first to check in!</li>
+          </ul>
+        </section>
       </div>
     </div>
 
