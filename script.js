@@ -95,7 +95,11 @@ function loadAttendance() {
 
   try {
     const savedData = JSON.parse(savedAttendance);
-    const validCounts =
+    const validData =
+      savedData !== null &&
+      typeof savedData === "object" &&
+      savedData.teams !== null &&
+      typeof savedData.teams === "object" &&
       Number.isInteger(savedData.total) &&
       savedData.total >= 0 &&
       Number.isInteger(savedData.teams.water) &&
@@ -103,17 +107,41 @@ function loadAttendance() {
       Number.isInteger(savedData.teams.zero) &&
       savedData.teams.zero >= 0 &&
       Number.isInteger(savedData.teams.power) &&
-      savedData.teams.power >= 0;
-    const validAttendees =
+      savedData.teams.power >= 0 &&
       Array.isArray(savedData.attendees) &&
       savedData.attendees.every(function (attendee) {
         return (
           typeof attendee.name === "string" &&
+          attendee.name.trim() !== "" &&
           Object.prototype.hasOwnProperty.call(TEAM_NAMES, attendee.team)
         );
       });
 
-    if (!validCounts || !validAttendees) {
+    if (
+      !validData ||
+      savedData.total !==
+        savedData.teams.water + savedData.teams.zero + savedData.teams.power ||
+      savedData.total !== savedData.attendees.length
+    ) {
+      storageWarning = " Saved progress was invalid and could not be loaded.";
+      return;
+    }
+
+    const attendeeTeamCounts = {
+      water: 0,
+      zero: 0,
+      power: 0,
+    };
+
+    savedData.attendees.forEach(function (attendee) {
+      attendeeTeamCounts[attendee.team] += 1;
+    });
+
+    if (
+      savedData.teams.water !== attendeeTeamCounts.water ||
+      savedData.teams.zero !== attendeeTeamCounts.zero ||
+      savedData.teams.power !== attendeeTeamCounts.power
+    ) {
       storageWarning = " Saved progress was invalid and could not be loaded.";
       return;
     }
@@ -133,9 +161,13 @@ function saveAttendance() {
   }
 }
 
-function showMessage(message, isSuccess) {
+function showMessage(message, isSuccess, isCelebration) {
   greeting.textContent = message;
-  greeting.className = isSuccess ? "success-message" : "warning-message";
+  greeting.className = isCelebration
+    ? "success-message celebration-message"
+    : isSuccess
+      ? "success-message"
+      : "warning-message";
   greeting.style.display = "block";
 }
 
@@ -157,7 +189,25 @@ function updateAttendanceDisplay() {
   document.getElementById("zeroCount").textContent = attendance.teams.zero;
   document.getElementById("powerCount").textContent = attendance.teams.power;
 
+  updateWinningTeams();
   updateAttendeeList();
+}
+
+function updateWinningTeams() {
+  const highestCount = Math.max(
+    attendance.teams.water,
+    attendance.teams.zero,
+    attendance.teams.power
+  );
+
+  Object.keys(TEAM_NAMES).forEach(function (team) {
+    const teamCard = document.querySelector(`.team-card.${team}`);
+    const isWinner =
+      attendance.total >= ATTENDANCE_GOAL &&
+      attendance.teams[team] === highestCount;
+
+    teamCard.classList.toggle("is-winning-team", isWinner);
+  });
 }
 
 function updateAttendeeList() {
@@ -200,14 +250,19 @@ function getWinningTeamNames() {
     }
   });
 
-  return winningTeams.join(" and ");
+  if (winningTeams.length > 1) {
+    return `${winningTeams.join(" and ")} are tied for the lead`;
+  }
+
+  return `${winningTeams[0]} is the attendance leader`;
 }
 
 function showAttendanceGoalMessage() {
   const winner = getWinningTeamNames();
   showMessage(
-    `Congratulations! We reached ${ATTENDANCE_GOAL} attendees. ${winner} is leading the team attendance!${storageWarning}`,
-    storageWarning === ""
+    `Congratulations! We reached our goal of ${ATTENDANCE_GOAL} attendees. ${winner!}${storageWarning}`,
+    storageWarning === "",
+    true
   );
 }
 

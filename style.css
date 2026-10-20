@@ -904,3 +904,55 @@ select:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+.celebration-message {
+  border: 1px solid #f4d782;
+  background: linear-gradient(110deg, #fff9e8, #fff2c6);
+  color: #624500;
+  font-size: 20px;
+  font-weight: 700;
+  animation: celebration-pop 500ms ease-out both;
+}
+
+.celebration-message::before {
+  content: "🎉 ";
+}
+
+.celebration-message::after {
+  content: " 🎉";
+}
+
+.team-card.is-winning-team {
+  position: relative;
+  border: 2px solid #e1ad2f;
+  box-shadow: 0 0 0 3px rgba(225, 173, 47, 0.15);
+}
+
+.team-card.is-winning-team::after {
+  content: "ATTENDANCE LEADER";
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: #fff1c2;
+  color: #765200;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+}
+
+@keyframes celebration-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celebration-message {
+    animation: none;
+  }
+}
