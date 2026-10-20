@@ -3,7 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Intel Sustainability Summit Check-In</title>
+    <meta
+      name="theme-color"
+      content="#0054ae"
+    />
+    <meta
+      name="description"
+      content="Check in for the Intel Sustainability Summit and track team attendance."
+    />
+    <title>Intel Sustainability Summit | Attendee Check-In</title>
     <!-- Add Font Awesome CSS -->
     <link
       rel="stylesheet"
@@ -16,19 +24,26 @@
     <div class="hero">
       <div class="hero-content">
         <img src="img/intel-logo.svg" alt="Intel Logo" class="intel-logo" />
+        <p class="hero-eyebrow">INTEL SUSTAINABILITY SUMMIT</p>
         <h1>Team Sustainability Summit</h1>
         <div class="hero-divider"></div>
         <p>
-          <i class="fas fa-leaf"></i> Check-in system for sustainability event
-          attendees
+          <i class="fas fa-leaf"></i> Inspiring progress toward a more
+          sustainable future
         </p>
       </div>
     </div>
     <!-- Attendance tracking -->
     <div class="attendance-tracker">
       <div class="attendance-header">
-        <i class="fas fa-users"></i>
-        Attendance: <span id="attendeeCount">0</span>/50
+        <div class="attendance-label">
+          <i class="fas fa-users"></i>
+          <span>Event attendance</span>
+        </div>
+        <div class="attendance-total">
+          <span id="attendeeCount">0</span>
+          <span class="attendance-goal">/ 50</span>
+        </div>
       </div>
       <div
         class="progress-container"
@@ -53,6 +68,7 @@
       >
         <i class="fas fa-user-check"></i> Check In an Attendee
       </button>
+      <p class="check-in-hint">Add an attendee to update the team totals.</p>
 
       <div
         id="checkInDialog"
@@ -107,15 +123,15 @@
         <h3>Team Attendance</h3>
         <div class="teams-grid">
           <div class="team-card water">
-            <span class="team-name">🌊 Team Water Wise</span>
+            <span class="team-name"><span aria-hidden="true">🌊</span> Team Water Wise</span>
             <span class="team-count" id="waterCount">0</span>
           </div>
           <div class="team-card zero">
-            <span class="team-name">🌿 Team Net Zero</span>
+            <span class="team-name"><span aria-hidden="true">🌿</span> Team Net Zero</span>
             <span class="team-count" id="zeroCount">0</span>
           </div>
           <div class="team-card power">
-            <span class="team-name">⚡ Team Renewables</span>
+            <span class="team-name"><span aria-hidden="true">⚡</span> Team Renewables</span>
             <span class="team-count" id="powerCount">0</span>
           </div>
         </div>
