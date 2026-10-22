@@ -7,9 +7,6 @@ const TEAM_NAMES = {
 };
 
 const checkInForm = document.getElementById("checkInForm");
-const checkInDialog = document.getElementById("checkInDialog");
-const openCheckInDialogButton = document.getElementById("openCheckInDialog");
-const closeCheckInDialogButton = document.getElementById("closeCheckInDialog");
 const nameInput = document.getElementById("attendeeName");
 const teamSelect = document.getElementById("teamSelect");
 const greeting = document.getElementById("greeting");
@@ -29,55 +26,6 @@ let attendance = {
   attendees: [],
 };
 let storageWarning = "";
-
-openCheckInDialogButton.addEventListener("click", function () {
-  checkInDialog.hidden = false;
-  document.body.classList.add("modal-open");
-  nameInput.focus();
-});
-
-closeCheckInDialogButton.addEventListener("click", function () {
-  closeCheckInDialog();
-});
-
-checkInDialog.addEventListener("click", function (event) {
-  if (event.target === checkInDialog) {
-    closeCheckInDialog();
-  }
-});
-
-document.addEventListener("keydown", function (event) {
-  if (checkInDialog.hidden) {
-    return;
-  }
-
-  if (event.key === "Escape") {
-    closeCheckInDialog();
-    return;
-  }
-
-  if (event.key === "Tab") {
-    const focusableElements = checkInDialog.querySelectorAll(
-      "button:not([disabled]), input:not([disabled]), select:not([disabled])"
-    );
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-
-    if (event.shiftKey && document.activeElement === firstElement) {
-      event.preventDefault();
-      lastElement.focus();
-    } else if (!event.shiftKey && document.activeElement === lastElement) {
-      event.preventDefault();
-      firstElement.focus();
-    }
-  }
-});
-
-function closeCheckInDialog() {
-  checkInDialog.hidden = true;
-  document.body.classList.remove("modal-open");
-  openCheckInDialogButton.focus();
-}
 
 function loadAttendance() {
   let savedAttendance;
@@ -260,7 +208,7 @@ function getWinningTeamNames() {
 function showAttendanceGoalMessage() {
   const winner = getWinningTeamNames();
   showMessage(
-    `Congratulations! We reached our goal of ${ATTENDANCE_GOAL} attendees. ${winner!}${storageWarning}`,
+    `Congratulations! We reached our goal of ${ATTENDANCE_GOAL} attendees. ${winner}!${storageWarning}`,
     storageWarning === "",
     true
   );
@@ -296,9 +244,7 @@ checkInForm.addEventListener("submit", function (event) {
       storageWarning === ""
     );
   }
-
   checkInForm.reset();
-  closeCheckInDialog();
 });
 
 loadAttendance();

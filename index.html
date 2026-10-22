@@ -61,62 +61,43 @@
       <!-- Feedback message -->
       <p id="greeting" aria-live="polite"></p>
 
-      <button
-        type="button"
-        id="openCheckInDialog"
-        class="open-check-in-button"
-      >
-        <i class="fas fa-user-check"></i> Check In an Attendee
-      </button>
-      <p class="check-in-hint">Add an attendee to update the team totals.</p>
-
-      <div
-        id="checkInDialog"
-        class="check-in-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="checkInDialogHeading"
-        hidden
-      >
-        <div class="check-in-dialog-content">
-          <div class="dialog-header">
-            <h2 id="checkInDialogHeading">Attendee Check-In</h2>
-            <button
-              type="button"
-              id="closeCheckInDialog"
-              class="dialog-close"
-              aria-label="Close check-in form"
-            >
-              &times;
+      <section class="check-in-section" aria-labelledby="checkInHeading">
+        <div class="check-in-section-heading">
+          <div>
+            <p class="section-eyebrow">WELCOME TO THE SUMMIT</p>
+            <h2 id="checkInHeading">Attendee Check-In</h2>
+          </div>
+          <i class="fas fa-user-check check-in-section-icon" aria-hidden="true"></i>
+        </div>
+        <p class="check-in-hint">Enter your name and select a team to check in.</p>
+        <form class="check-in" id="checkInForm">
+          <div class="form-group">
+            <div class="input-wrapper">
+              <label class="visually-hidden" for="attendeeName"
+                >Attendee name</label
+              >
+              <input
+                type="text"
+                id="attendeeName"
+                name="attendeeName"
+                placeholder="Enter your name"
+                autocomplete="name"
+                required
+              />
+              <label class="visually-hidden" for="teamSelect">Select your team</label>
+              <select id="teamSelect" name="team" required>
+                <option value="" disabled selected>Select your team...</option>
+                <option value="water">Team Water Wise</option>
+                <option value="zero">Team Net Zero</option>
+                <option value="power">Team Renewables</option>
+              </select>
+            </div>
+            <button type="submit" id="checkInBtn">
+              <i class="fas fa-user-check"></i> Check In
             </button>
           </div>
-          <form class="check-in" id="checkInForm">
-            <label for="attendeeName" class="form-label"
-              >Enter the attendee's name and team</label
-            >
-            <div class="form-group">
-              <div class="input-wrapper">
-                <input
-                  type="text"
-                  id="attendeeName"
-                  name="attendeeName"
-                  placeholder="Enter name..."
-                  required
-                />
-                <select id="teamSelect" name="team" required>
-                  <option value="" disabled selected>Select Team...</option>
-                  <option value="water">Team Water Wise</option>
-                  <option value="zero">Team Net Zero</option>
-                  <option value="power">Team Renewables</option>
-                </select>
-              </div>
-              <button type="submit" id="checkInBtn">
-                <i class="fas fa-user-check"></i> Check In
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+        </form>
+      </section>
 
       <!-- Team stats -->
       <div class="team-stats">
