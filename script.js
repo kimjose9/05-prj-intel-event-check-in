@@ -184,31 +184,9 @@ function updateAttendeeList() {
   });
 }
 
-function getWinningTeamNames() {
-  const highestCount = Math.max(
-    attendance.teams.water,
-    attendance.teams.zero,
-    attendance.teams.power
-  );
-  const winningTeams = [];
-
-  Object.keys(TEAM_NAMES).forEach(function (team) {
-    if (attendance.teams[team] === highestCount) {
-      winningTeams.push(TEAM_NAMES[team]);
-    }
-  });
-
-  if (winningTeams.length > 1) {
-    return `${winningTeams.join(" and ")} are tied for the lead`;
-  }
-
-  return `${winningTeams[0]} is the attendance leader`;
-}
-
 function showAttendanceGoalMessage() {
-  const winner = getWinningTeamNames();
   showMessage(
-    `Congratulations! We reached our goal of ${ATTENDANCE_GOAL} attendees. ${winner}!${storageWarning}`,
+    `Congratulations! We reached our goal of ${ATTENDANCE_GOAL} attendees!${storageWarning}`,
     storageWarning === "",
     true
   );
